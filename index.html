@@ -1,27 +1,49 @@
-<!--
-Palette: Vibrant Ocean & Sunset (#023e8a, #0096c7, #48cae4, #fb8500, #ffb703)
-Plan: 
-1. Intro/Hook: Define the Sabbath and its foundational meaning.
-2. Section 1 (Bar Chart): Biblical Mentions across scripture to compare frequency.
-3. Section 2 (Donut Chart): Core Elements/Focus of the Sabbath showing composition of activities.
-4. Section 3 (Area Chart): Decalogue Weight, illustrating the immense focus placed on the 4th Commandment by word count.
-5. Section 4 (HTML Flowchart): The Rhythm of the Week, mapping the process from labor to rest.
-Visualizations:
-- Mentions -> Compare -> Bar Chart -> Chart.js (NO SVG)
-- Focus -> Organize/Composition -> Donut Chart -> Chart.js (NO SVG)
-- Decalogue -> Change/Volume -> Area Chart -> Chart.js (NO SVG)
-- Rhythm -> Organize/Process -> CSS Flowchart -> HTML/Tailwind (NO SVG)
-Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in the output.
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Biblical Sabbath: An Analytical Infographic</title>
+    <title>SabbathData | The Architecture of Divine Rest</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
+        :root {
+            --primary: #023e8a;
+            --secondary: #0096c7;
+            --accent: #fb8500;
+            --accent-light: #ffb703;
+            --bg-site: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        .sabbath-mode {
+            --primary: #1e293b;
+            --secondary: #334155;
+            --accent: #94a3b8;
+            --accent-light: #cbd5e1;
+            --bg-site: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            background-color: var(--bg-site);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
         .chart-container {
             position: relative;
             width: 100%;
@@ -42,87 +64,165 @@ Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in the output.
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
         .gradient-text {
-            background: linear-gradient(to right, #023e8a, #0096c7);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
+        .hero-pattern {
+            background-color: var(--bg-site);
+            background-image: radial-gradient(var(--secondary) 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+            opacity: 0.1;
+        }
+
+        .nav-glass {
+            background: rgba(2, 62, 138, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sabbath-mode .nav-glass {
+            background: rgba(15, 23, 42, 0.8);
+        }
     </style>
 </head>
-<body class="antialiased pb-16">
+<body class="antialiased pb-16 overflow-x-hidden">
 
-    <nav class="bg-[#023e8a] text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="font-bold text-xl tracking-wider">SABBATH<span class="text-[#ffb703]">DATA</span></div>
-            <div class="hidden md:flex space-x-6 text-sm font-semibold">
-                <a href="#overview" class="hover:text-[#48cae4] transition-colors">Overview</a>
-                <a href="#scripture" class="hover:text-[#48cae4] transition-colors">Scriptural Frequency</a>
-                <a href="#decalogue" class="hover:text-[#48cae4] transition-colors">The Decalogue</a>
-                <a href="#rhythm" class="hover:text-[#48cae4] transition-colors">Weekly Rhythm</a>
+    <nav class="nav-glass text-white sticky top-0 z-50 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center border border-white/20">
+                    <i data-lucide="sun" class="w-6 h-6 text-[var(--accent-light)]"></i>
+                </div>
+                <div class="font-bold text-2xl tracking-tighter">SABBATH<span class="text-[var(--accent-light)]">DATA</span></div>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center space-x-8 text-sm font-medium mr-4">
+                    <a href="#overview" class="hover:text-[var(--accent-light)] transition-colors">Overview</a>
+                    <a href="#scripture" class="hover:text-[var(--accent-light)] transition-colors">Frequency</a>
+                    <a href="#decalogue" class="hover:text-[var(--accent-light)] transition-colors">Decalogue</a>
+                    <a href="#rhythm" class="hover:text-[var(--accent-light)] transition-colors">Rhythm</a>
+                </div>
+                <button id="sabbathToggle" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-2 md:px-4 md:py-2 rounded-full border border-white/20 transition-all text-xs md:text-sm">
+                    <i data-lucide="moon" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Sabbath Mode</span>
+                </button>
             </div>
         </div>
     </nav>
 
-    <header id="overview" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight text-[#023e8a]">
-            The Architecture of <span class="text-[#fb8500]">Divine Rest</span>
-        </h1>
-        <p class="max-w-3xl mx-auto text-lg md:text-xl text-slate-600 leading-relaxed">
-            The Sabbath (from the Hebrew root <strong>shavat</strong>, meaning "to cease") is not merely a day off. It is an ancient, foundational rhythm of human existence established in the biblical texts. This infographic visualizes the structure, prominence, and practice of the biblical Sabbath based on historical and textual data.
-        </p>
+    <header id="overview" class="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20 px-4">
+        <div class="hero-pattern absolute inset-0"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[var(--secondary)] rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[var(--accent)] rounded-full mix-blend-multiply filter blur-[128px] opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center" data-aos="fade-up">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--secondary)]/10 text-[var(--primary)] text-xs font-bold uppercase tracking-widest mb-8 border border-[var(--secondary)]/20">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--primary)] opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-[var(--primary)]"></span>
+                </span>
+                Textual Analysis & Data Visualization
+            </div>
+            <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[1.1] tracking-tight">
+                The Architecture of <br>
+                <span class="gradient-text italic">Divine Rest</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-xl md:text-2xl text-[var(--text-muted)] leading-relaxed mb-12 font-light">
+                The Sabbath (from the Hebrew root <strong class="text-[var(--primary)]">shavat</strong>) is not merely a day off. It is an ancient, foundational rhythm of human existence established in the biblical texts.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#scripture" class="bg-[var(--primary)] text-white px-8 py-4 rounded-full font-bold shadow-xl shadow-[var(--primary)]/20 hover:scale-105 transition-transform flex items-center gap-2">
+                    Explore the Data <i data-lucide="arrow-down" class="w-5 h-5"></i>
+                </a>
+                <button class="px-8 py-4 rounded-full font-bold text-[var(--text-main)] border border-slate-200 hover:bg-white transition-colors">
+                    Learn More
+                </button>
+            </div>
+        </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             
-            <section id="scripture" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[#0096c7]">
-                <h2 class="text-2xl font-bold text-[#023e8a] mb-4">Scriptural Prominence</h2>
-                <p class="text-slate-600 mb-6 text-sm md:text-base">
-                    The concept of the Sabbath is woven throughout the entire biblical narrative. Tracking mentions of the Sabbath across different literary divisions reveals its foundational establishment in the Torah (Pentateuch) and a massive resurgence during the ministry of Jesus in the Gospels, where its true purpose was heavily debated and clarified.
+            <section id="scripture" class="bg-[var(--card-bg)] rounded-3xl shadow-xl p-6 md:p-10 border border-slate-200/50 transition-all duration-500" data-aos="fade-right">
+                <h2 class="text-3xl font-bold text-[var(--primary)] mb-6">Scriptural Prominence</h2>
+                <p class="text-[var(--text-muted)] mb-8 text-base leading-relaxed">
+                    The concept of the Sabbath is woven throughout the entire biblical narrative. Tracking mentions across literary divisions reveals its foundation in the <span class="font-bold text-[var(--text-main)]">Torah</span> and a massive resurgence during the ministry of Jesus.
                 </p>
                 <div class="chart-container">
                     <canvas id="mentionsChart"></canvas>
                 </div>
-                <div class="mt-4 bg-[#e0f2fe] p-4 rounded-lg text-sm text-[#023e8a] font-medium border-l-4 border-[#0096c7]">
-                    <span class="text-lg font-bold mr-2">&#8505;</span> Key Insight: The high frequency in the Gospels highlights Jesus' focus on redefining the Sabbath from a legalistic burden back to a restorative gift.
+                <div class="mt-8 bg-[var(--secondary)]/10 p-5 rounded-2xl text-sm text-[var(--primary)] font-medium border border-[var(--secondary)]/20 flex gap-4 items-start">
+                    <i data-lucide="lightbulb" class="w-6 h-6 shrink-0"></i>
+                    <p>The high frequency in the Gospels highlights Jesus' focus on redefining the Sabbath from a legalistic burden back to a restorative gift.</p>
                 </div>
             </section>
 
-            <section class="bg-white rounded-2xl shadow-lg p-6 md:p-8 border-t-4 border-[#fb8500]">
-                <h2 class="text-2xl font-bold text-[#023e8a] mb-4">The Core Components</h2>
-                <p class="text-slate-600 mb-6 text-sm md:text-base">
-                    While "rest" is the literal translation, the biblical practice of the Sabbath is highly active in specific areas. Based on scriptural mandates and historical practice, the day is composed of multifaceted restoration, balancing physical cessation with spiritual and social engagement.
+            <section class="bg-[var(--card-bg)] rounded-3xl shadow-xl p-6 md:p-10 border border-slate-200/50 transition-all duration-500" data-aos="fade-left">
+                <h2 class="text-3xl font-bold text-[var(--primary)] mb-6">The Core Components</h2>
+                <p class="text-[var(--text-muted)] mb-8 text-base leading-relaxed">
+                    While "rest" is the literal translation, the biblical practice is highly active. It is a multifaceted restoration, balancing physical cessation with spiritual and social engagement.
                 </p>
                 <div class="chart-container">
                     <canvas id="focusChart"></canvas>
                 </div>
-                <div class="mt-4 bg-[#fff3cd] p-4 rounded-lg text-sm text-[#9a6b00] font-medium border-l-4 border-[#ffb703]">
-                    <span class="text-lg font-bold mr-2">&#8505;</span> Key Insight: Cessation of labor is only the foundation. It creates the necessary vacuum of time required for worship, family communion, and acts of mercy.
+                <div class="mt-8 bg-[var(--accent-light)]/10 p-5 rounded-2xl text-sm text-[var(--text-main)] font-medium border border-[var(--accent-light)]/20 flex gap-4 items-start">
+                    <i data-lucide="target" class="w-6 h-6 shrink-0 text-[var(--accent)]"></i>
+                    <p>Cessation of labor is only the foundation. It creates the necessary vacuum of time required for worship, family, and acts of mercy.</p>
                 </div>
             </section>
 
         </div>
 
-        <section id="decalogue" class="bg-white rounded-2xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-[#023e8a]">
-            <div class="md:flex justify-between items-end mb-6">
-                <div class="max-w-2xl">
-                    <h2 class="text-3xl font-bold text-[#023e8a] mb-4">The Weight of the Fourth Commandment</h2>
-                    <p class="text-slate-600 text-sm md:text-base">
-                        When analyzing the Ten Commandments (Exodus 20), the command to observe the Sabbath stands out dramatically in its volume and descriptive detail. By plotting the word count of each commandment, we visualize the immense theological and social weight placed upon this specific law. It includes detailed instructions ensuring economic rest extends to servants, foreigners, and even livestock.
+        <section id="decalogue" class="bg-[var(--card-bg)] rounded-3xl shadow-xl p-6 md:p-12 mb-12 border border-slate-200/50 transition-all duration-500" data-aos="fade-up">
+            <div class="md:flex justify-between items-start gap-12 mb-10">
+                <div class="max-w-3xl">
+                    <h2 class="text-4xl font-bold text-[var(--primary)] mb-6">The Weight of the Fourth Commandment</h2>
+                    <p class="text-[var(--text-muted)] text-lg leading-relaxed">
+                        When analyzing the Ten Commandments (Exodus 20), the command to observe the Sabbath stands out dramatically in its volume. By plotting the word count, we visualize the immense weight placed upon this specific law. It ensures economic rest extends to servants, foreigners, and even livestock.
                     </p>
                 </div>
-                <div class="text-center mt-6 md:mt-0 bg-[#f8fafc] p-4 rounded-xl border border-slate-200 shadow-inner">
-                    <div class="text-5xl font-black text-[#fb8500]">97</div>
-                    <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Words in Commandment IV</div>
+                <div class="shrink-0 text-center mt-8 md:mt-0 bg-[var(--bg-site)] p-8 rounded-3xl border border-slate-200 shadow-inner min-w-[200px]">
+                    <div class="text-7xl font-black text-[var(--accent)]">97</div>
+                    <div class="text-xs font-bold text-[var(--text-muted)] uppercase tracking-[0.2em] mt-2">Words in Cmd IV</div>
                 </div>
             </div>
             
-            <div class="chart-container md:h-[450px]">
+            <div class="chart-container md:h-[400px]">
                 <canvas id="decalogueChart"></canvas>
             </div>
         </section>
 
-        <section id="rhythm" class="bg-[#023e8a] rounded-2xl shadow-2xl p-6 md:p-10 text-white relative overflow-hidden">
+        <!-- New Voices of Wisdom Section -->
+        <section id="voices" class="py-20 mb-12" data-aos="fade-up">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4 italic font-serif">Voices of Wisdom</h2>
+                <div class="w-24 h-1 bg-[var(--accent)] mx-auto rounded-full"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 bg-white/40 backdrop-blur-sm rounded-3xl border border-white/60 shadow-sm transition-transform hover:-translate-y-2">
+                    <i data-lucide="quote" class="w-10 h-10 text-[var(--secondary)] mb-6 opacity-40"></i>
+                    <p class="text-lg italic text-[var(--text-main)] mb-6">"The Sabbath is not a date, but an atmosphere."</p>
+                    <p class="font-bold text-[var(--primary)] text-sm">— Abraham Joshua Heschel</p>
+                </div>
+                <div class="p-8 bg-white/40 backdrop-blur-sm rounded-3xl border border-white/60 shadow-sm transition-transform hover:-translate-y-2">
+                    <i data-lucide="quote" class="w-10 h-10 text-[var(--secondary)] mb-6 opacity-40"></i>
+                    <p class="text-lg italic text-[var(--text-main)] mb-6">"A world without a Sabbath would be like a man without a smile."</p>
+                    <p class="font-bold text-[var(--primary)] text-sm">— Henry Ward Beecher</p>
+                </div>
+                <div class="p-8 bg-white/40 backdrop-blur-sm rounded-3xl border border-white/60 shadow-sm transition-transform hover:-translate-y-2">
+                    <i data-lucide="quote" class="w-10 h-10 text-[var(--secondary)] mb-6 opacity-40"></i>
+                    <p class="text-lg italic text-[var(--text-main)] mb-6">"The Sabbath was made for man, not man for the Sabbath."</p>
+                    <p class="font-bold text-[var(--primary)] text-sm">— Jesus of Nazareth</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rhythm" class="bg-[var(--primary)] rounded-[3rem] shadow-2xl p-8 md:p-16 text-white relative overflow-hidden mb-12" data-aos="zoom-in">
             <div class="absolute top-0 right-0 w-64 h-64 bg-[#0096c7] rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform translate-x-1/2 -translate-y-1/2"></div>
             <div class="absolute bottom-0 left-0 w-64 h-64 bg-[#fb8500] rounded-full mix-blend-multiply filter blur-3xl opacity-50 transform -translate-x-1/2 translate-y-1/2"></div>
             
@@ -169,158 +269,235 @@ Confirmation: NEITHER Mermaid JS NOR SVG were used anywhere in the output.
 
     </main>
 
-    <footer class="mt-16 bg-slate-900 text-slate-400 py-8 text-center text-sm">
-        <p>Data visualization based on biblical textual analysis. Created for educational purposes.</p>
+    <footer class="mt-16 bg-slate-950 text-slate-500 py-12 text-center text-sm border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="font-bold text-xl tracking-wider text-slate-300">SABBATH<span class="text-slate-500">DATA</span></div>
+            <p>© 2023 SabbathData Project. Data visualization based on biblical textual analysis.</p>
+            <div class="flex space-x-4">
+                <i data-lucide="info" class="w-5 h-5 cursor-help"></i>
+                <i data-lucide="github" class="w-5 h-5 cursor-pointer"></i>
+            </div>
+        </div>
     </footer>
 
     <script>
+        let charts = {};
+
+        function getThemeColors() {
+            const style = getComputedStyle(document.body);
+            return {
+                primary: style.getPropertyValue('--primary').trim(),
+                secondary: style.getPropertyValue('--secondary').trim(),
+                accent: style.getPropertyValue('--accent').trim(),
+                accentLight: style.getPropertyValue('--accent-light').trim(),
+                textMain: style.getPropertyValue('--text-main').trim(),
+                textMuted: style.getPropertyValue('--text-muted').trim(),
+                gridColor: body.classList.contains('sabbath-mode') ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'
+            };
+        }
+
+        // Theme Toggling logic
+        const sabbathToggle = document.getElementById('sabbathToggle');
+        const body = document.body;
+
+        sabbathToggle.addEventListener('click', () => {
+            body.classList.toggle('sabbath-mode');
+            const isSabbath = body.classList.contains('sabbath-mode');
+
+            // Update icon and text
+            const icon = sabbathToggle.querySelector('i');
+            const text = sabbathToggle.querySelector('span');
+
+            if (isSabbath) {
+                icon.setAttribute('data-lucide', 'sun');
+                text.textContent = 'Active Mode';
+            } else {
+                icon.setAttribute('data-lucide', 'moon');
+                text.textContent = 'Sabbath Mode';
+            }
+            lucide.createIcons();
+
+            updateCharts();
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out-quad'
+        });
+
+        // Initialize Lucide
+        lucide.createIcons();
+
         const tooltipConfig = {
+            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+            titleFont: { family: 'Inter', size: 13, weight: 'bold' },
+            bodyFont: { family: 'Inter', size: 12 },
+            padding: 12,
+            cornerRadius: 8,
+            displayColors: false,
             callbacks: {
                 title: function(tooltipItems) {
                     const item = tooltipItems[0];
                     let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) {
-                        return label.join(' ');
-                    } else {
-                        return label;
-                    }
+                    return Array.isArray(label) ? label.join(' ') : label;
                 }
             }
         };
 
-        const ctxMentions = document.getElementById('mentionsChart').getContext('2d');
-        new Chart(ctxMentions, {
-            type: 'bar',
-            data: {
-                labels: [["The Pentateuch", "(Torah)"], "Historical Books", ["Major & Minor", "Prophets"], "The Four Gospels", ["Pauline &", "General Epistles"]],
-                datasets: [{
-                    label: 'Occurrences (Approx)',
-                    data: [58, 25, 41, 54, 10],
-                    backgroundColor: '#0096c7',
-                    hoverBackgroundColor: '#023e8a',
-                    borderRadius: 6,
-                    borderSkipped: false
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: tooltipConfig,
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#f1f5f9'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            font: {
-                                size: 11
-                            }
-                        }
-                    }
-                }
-            }
-        });
+        function initCharts() {
+            const colors = getThemeColors();
 
-        const ctxFocus = document.getElementById('focusChart').getContext('2d');
-        new Chart(ctxFocus, {
-            type: 'doughnut',
-            data: {
-                labels: ["Physical Rest", ["Spiritual", "Worship"], "Family Communion", "Acts of Mercy"],
-                datasets: [{
-                    data: [40, 30, 20, 10],
-                    backgroundColor: [
-                        '#023e8a',
-                        '#0096c7',
-                        '#fb8500',
-                        '#ffb703'
-                    ],
-                    borderWidth: 2,
-                    borderColor: '#ffffff',
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                cutout: '65%',
-                plugins: {
-                    tooltip: tooltipConfig,
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    }
-                }
-            }
-        });
+            // Mentions Chart
+            const ctxMentions = document.getElementById('mentionsChart').getContext('2d');
+            const gradientMentions = ctxMentions.createLinearGradient(0, 0, 0, 300);
+            gradientMentions.addColorStop(0, colors.secondary);
+            gradientMentions.addColorStop(1, colors.primary);
 
-        const ctxDecalogue = document.getElementById('decalogueChart').getContext('2d');
-        new Chart(ctxDecalogue, {
-            type: 'line',
-            data: {
-                labels: ["I (No Other Gods)", "II (No Idols)", ["III (Name", "in Vain)"], ["IV (Remember", "the Sabbath)"], "V (Honor Parents)", "VI (Do Not Murder)", "VII (No Adultery)", "VIII (Do Not Steal)", "IX (No False Witness)", "X (Do Not Covet)"],
-                datasets: [{
-                    label: 'Word Count (Exodus 20 Text)',
-                    data: [30, 91, 27, 97, 24, 4, 4, 4, 7, 33],
-                    fill: true,
-                    backgroundColor: 'rgba(251, 133, 0, 0.15)',
-                    borderColor: '#fb8500',
-                    borderWidth: 3,
-                    tension: 0.4,
-                    pointBackgroundColor: '#023e8a',
-                    pointBorderColor: '#ffffff',
-                    pointBorderWidth: 2,
-                    pointRadius: 6,
-                    pointHoverRadius: 9
-                }]
-            },
-            options: {
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: tooltipConfig,
-                    legend: {
-                        display: false
-                    }
+            charts.mentions = new Chart(ctxMentions, {
+                type: 'bar',
+                data: {
+                    labels: [["The Pentateuch", "(Torah)"], "Historical Books", ["Major & Minor", "Prophets"], "The Four Gospels", ["Pauline &", "General Epistles"]],
+                    datasets: [{
+                        label: 'Occurrences',
+                        data: [58, 25, 41, 54, 10],
+                        backgroundColor: gradientMentions,
+                        hoverBackgroundColor: colors.primary,
+                        borderRadius: 12,
+                        borderSkipped: false
+                    }]
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Total Word Count',
-                            font: {
-                                weight: 'bold'
-                            }
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: { tooltip: tooltipConfig, legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: colors.gridColor },
+                            ticks: { color: colors.textMuted, font: { family: 'Inter' } }
                         },
-                        grid: {
-                            color: '#f1f5f9'
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: colors.textMuted, font: { family: 'Inter', size: 11 } }
                         }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            font: {
-                                size: 10
+                    }
+                }
+            });
+
+            // Focus Chart
+            const ctxFocus = document.getElementById('focusChart').getContext('2d');
+            charts.focus = new Chart(ctxFocus, {
+                type: 'doughnut',
+                data: {
+                    labels: ["Physical Rest", ["Spiritual", "Worship"], "Family Communion", "Acts of Mercy"],
+                    datasets: [{
+                        data: [40, 30, 20, 10],
+                        backgroundColor: [colors.primary, colors.secondary, colors.accent, colors.accentLight],
+                        borderWidth: 4,
+                        borderColor: body.classList.contains('sabbath-mode') ? '#1e293b' : '#ffffff',
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        tooltip: tooltipConfig,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: colors.textMain,
+                                padding: 25,
+                                usePointStyle: true,
+                                font: { family: 'Inter', size: 12 }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
+
+            // Decalogue Chart
+            const ctxDecalogue = document.getElementById('decalogueChart').getContext('2d');
+            const gradientDecalogue = ctxDecalogue.createLinearGradient(0, 0, 0, 400);
+            gradientDecalogue.addColorStop(0, colors.accent + '33');
+            gradientDecalogue.addColorStop(1, colors.accent + '00');
+
+            charts.decalogue = new Chart(ctxDecalogue, {
+                type: 'line',
+                data: {
+                    labels: ["I (No Other Gods)", "II (No Idols)", ["III (Name", "in Vain)"], ["IV (Remember", "the Sabbath)"], "V (Honor Parents)", "VI (Do Not Murder)", "VII (No Adultery)", "VIII (Do Not Steal)", "IX (No False Witness)", "X (Do Not Covet)"],
+                    datasets: [{
+                        label: 'Word Count',
+                        data: [30, 91, 27, 97, 24, 4, 4, 4, 7, 33],
+                        fill: true,
+                        backgroundColor: gradientDecalogue,
+                        borderColor: colors.accent,
+                        borderWidth: 4,
+                        tension: 0.4,
+                        pointBackgroundColor: colors.primary,
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 10
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
+                    plugins: { tooltip: tooltipConfig, legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: colors.gridColor },
+                            ticks: { color: colors.textMuted, font: { family: 'Inter' } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: colors.textMuted, font: { family: 'Inter', size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateCharts() {
+            const colors = getThemeColors();
+
+            // Update Mentions Chart
+            const ctxMentions = document.getElementById('mentionsChart').getContext('2d');
+            const gradientMentions = ctxMentions.createLinearGradient(0, 0, 0, 300);
+            gradientMentions.addColorStop(0, colors.secondary);
+            gradientMentions.addColorStop(1, colors.primary);
+            charts.mentions.data.datasets[0].backgroundColor = gradientMentions;
+            charts.mentions.options.scales.y.grid.color = colors.gridColor;
+            charts.mentions.options.scales.y.ticks.color = colors.textMuted;
+            charts.mentions.options.scales.x.ticks.color = colors.textMuted;
+            charts.mentions.update();
+
+            // Update Focus Chart
+            charts.focus.data.datasets[0].backgroundColor = [colors.primary, colors.secondary, colors.accent, colors.accentLight];
+            charts.focus.data.datasets[0].borderColor = body.classList.contains('sabbath-mode') ? '#1e293b' : '#ffffff';
+            charts.focus.options.plugins.legend.labels.color = colors.textMain;
+            charts.focus.update();
+
+            // Update Decalogue Chart
+            const ctxDecalogue = document.getElementById('decalogueChart').getContext('2d');
+            const gradientDecalogue = ctxDecalogue.createLinearGradient(0, 0, 0, 400);
+            gradientDecalogue.addColorStop(0, colors.accent + '33');
+            gradientDecalogue.addColorStop(1, colors.accent + '00');
+
+            charts.decalogue.data.datasets[0].backgroundColor = gradientDecalogue;
+            charts.decalogue.data.datasets[0].borderColor = colors.accent;
+            charts.decalogue.data.datasets[0].pointBackgroundColor = colors.primary;
+
+            charts.decalogue.options.scales.y.grid.color = colors.gridColor;
+            charts.decalogue.options.scales.y.ticks.color = colors.textMuted;
+            charts.decalogue.options.scales.x.ticks.color = colors.textMuted;
+            charts.decalogue.update();
+        }
+
+        initCharts();
     </script>
 </body>
 </html>
